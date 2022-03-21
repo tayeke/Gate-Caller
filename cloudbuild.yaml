@@ -1,0 +1,30 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'gcr.io/$PROJECT_ID/gate-caller',
+    '--build-arg',
+    'FLASK_ENV=production',
+    '.',
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/gate-caller']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+  entrypoint: gcloud
+  args: [
+    'run',
+    'deploy',
+    'gate-caller',
+    '--image',
+    'gcr.io/$PROJECT_ID/gate-caller',
+    '--region',
+    'us-west1',
+    '--memory=512Mi',
+    # --no-allow-unauthenticated would be very much better
+    # but twilio webhook doesn't support a bearer token
+    '--allow-unauthenticated',
+    '--ingress=all',
+  ]
+images:
+  - gcr.io/$PROJECT_ID/gate-caller

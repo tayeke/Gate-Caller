@@ -12,7 +12,7 @@ Some people might mistakenly text the application so we will need to simply forw
 
 ## Test Locally
 
-You can easily run this flask app locally if you have Docker, but running `docker-build up`. The app is available on port *5000*.
+You can easily run this flask app locally if you have Docker, but running `docker compose up`. The app is available on port *5000*.
 
 Remember to set up your .env file by copying the .env.example and filling in your details.
 

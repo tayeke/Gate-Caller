@@ -22,7 +22,7 @@ You're going to need to run ngrok locally to point the twilio services to your l
 
 - Install gcloud cli
 - Your .env file will be used for the build, the production environment variable is set by the cloudbuild task.
-- Start a new app deployment with `gcloud submit build` from the main directory.
+- Start a new app deployment with `gcloud builds submit` from the main directory.
   - You may run into roadblocks with configuring google cloud service accounts, just follow the prompts if this is your first time.
 - The cloud run service will be private to iam users and service accounts with the cloud run invoke role. You can follow these steps to get a bearer token for your connection to the app.
   - Go to iam in GCP

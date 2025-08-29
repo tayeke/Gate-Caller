@@ -54,24 +54,23 @@ def sendVoiceNotifications():
   sendNotifications(f'{caller} is at the gate calling from {from_number}')
 
 def sendNotifications(message: str):
+  match notification_method:
 
-  for forward_to in forward_numbers:
-    match notification_method:
-
-      case 'sms':
+    case 'sms':
+      for forward_to in forward_numbers:
         twilio.messages.create(
           body = message,
           from_ = os.getenv('TWILIO_NUMBER'),
           to = forward_to
         )
 
-      case 'ntfy':
-        for topic in ntfy_topics:
-          requests.post(
-            f'https://ntfy.sh/{topic}',
-            data=message.encode(encoding='utf-8'),
-            headers={
-              'Title': 'Gate Caller',
-              'Priority': 'urgent',
-            }
-          )
+    case 'ntfy':
+      for topic in ntfy_topics:
+        requests.post(
+          f'https://ntfy.sh/{topic}',
+          data=message.encode(encoding='utf-8'),
+          headers={
+            'Title': 'Gate Caller',
+            'Priority': 'urgent',
+          }
+        )

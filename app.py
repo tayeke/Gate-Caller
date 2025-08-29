@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 import os
 import json
 import requests
-import pathlib
-print("ENV exists?", pathlib.Path('.env').exists())
-print("FORWARD_NUMBERS=", os.getenv('FORWARD_NUMBERS'))
 
 load_dotenv()
 app = Flask(__name__)

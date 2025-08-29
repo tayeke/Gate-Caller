@@ -1,4 +1,6 @@
 FROM python:3.10-bullseye
+ARG FLASK_ENV=development
+ENV FLASK_ENV=${FLASK_ENV}
 WORKDIR /app
 COPY . .
 RUN pip3 install -r requirements.txt

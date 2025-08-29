@@ -5,14 +5,17 @@ from dotenv import load_dotenv
 import os
 import json
 import requests
+import pathlib
+print("ENV exists?", pathlib.Path('.env').exists())
+print("FORWARD_NUMBERS=", os.getenv('FORWARD_NUMBERS'))
 
 load_dotenv()
 app = Flask(__name__)
 
 twilio = Client(os.getenv('TWILIO_SID'), os.getenv('TWILIO_TOKEN'))
-forward_numbers = json.loads(os.getenv('FORWARD_NUMBERS'))
-notification_method = os.getenv('NOTIFICATION_METHOD')
-ntfy_topics = json.loads(os.getenv('NTFY_TOPICS'))
+forward_numbers = json.loads(os.getenv('FORWARD_NUMBERS', '[]'))
+notification_method = os.getenv('NOTIFICATION_METHOD', 'sms')
+ntfy_topics = json.loads(os.getenv('NTFY_TOPICS', '[]'))
 
 @app.route('/voice', methods = ['POST'])
 def receive_voice():
